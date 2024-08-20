@@ -1,54 +1,50 @@
 <template>
-  <el-form :inline="true" :model="formInline" class="demo-form-inline">
-    <el-form-item label="Approved by">
-      <el-input v-model="formInline.user" placeholder="Approved by" clearable />
-    </el-form-item>
-    <el-form-item label="Activity zone">
-      <el-select
-        v-model="formInline.region"
-        placeholder="Activity zone"
-        clearable
-      >
-        <el-option label="Zone one" value="shanghai" />
-        <el-option label="Zone two" value="beijing" />
-      </el-select>
-    </el-form-item>
-    <el-form-item label="Activity time">
-      <el-date-picker
-        v-model="formInline.date"
-        type="date"
-        placeholder="Pick a date"
-        clearable
-      />
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit">Query</el-button>
-    </el-form-item>
-  </el-form>
+  <div class="container">
+    <div class="name-input">
+      <input type="text" placeholder="first name" />
+      <input type="text" placeholder="last name" />
+    </div>
+    <div class="mail-input">
+      <input type="text" name="email" id="mail-input-id" placeholder="e-mail" />
+    </div>
+    <div class="message-input">
+      <textarea
+        name="message"
+        id="message-input-id"
+        placeholder="message"
+      ></textarea>
+    </div>
+    <button>send</button>
+  </div>
 </template>
 
-<script lang="ts" setup>
-import { reactive } from "vue";
-
-const formInline = reactive({
-  user: "",
-  region: "",
-  date: "",
-});
-
-const onSubmit = () => {
-  console.log("submit!");
-};
-</script>
+<script setup lang="ts"></script>
 
 <style>
-.demo-form-inline .el-input {
-  --el-input-width: 220px;
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  gap: 10px;
 }
 
-.demo-form-inline .el-select {
-  --el-select-width: 220px;
+.name-input {
+  display: flex;
+  gap: 10px;
 }
+
+
+#mail-input-id {
+  display: flex;
+  width: 100%;
+}
+
+#message-input-id{
+  display: flex;
+  width: 100%;
+
+}
+
+
 </style>
-
-<style></style>

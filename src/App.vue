@@ -1,11 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+</script>
 
 <template>
   <div class="container">
-    <kontakt-form-comp
-    
-    
-    ></kontakt-form-comp>
+    <kontakt-form-comp></kontakt-form-comp>
   </div>
 </template>
 
