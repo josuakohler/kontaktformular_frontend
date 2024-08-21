@@ -1,55 +1,54 @@
 <template>
   <div class="container">
     <div class="name-input">
-      <input type="text" placeholder="first name" />
-      <input type="text" placeholder="last name" />
+      <input v-model="firstname" type="text" placeholder="first name" />
+      <input v-model="lastname" type="text" placeholder="last name" />
     </div>
     <div class="mail-input">
-      <input type="text" name="email" id="mail-input-id" placeholder="e-mail" />
+      <input
+        v-model="mail"
+        type="text"
+        name="email"
+        id="mail-input-id"
+        placeholder="e-mail"
+      />
     </div>
     <div class="message-input">
       <textarea
+        v-model="messageText"
         name="message"
         id="message-input-id"
         placeholder="message"
       ></textarea>
     </div>
-    <button>send</button>
+    <button @click="submitMessage">send</button>
   </div>
-
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+import { useMessageStore } from "../stores/message.store";
+import { Message } from "../types/message";
 
-<style>
-.container {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  margin: 0;
-  gap: 10px;
-}
+const messageStore = useMessageStore();
 
-.name-input {
-  display: flex;
-  gap: 10px;
+const firstname = ref("");
+const lastname = ref("");
+const mail = ref("");
+const messageText = ref("");
 
-}
-
-
-#mail-input-id {
-  display: flex;
-  width: 100%;
-}
-
-#message-input-id{
-  display: flex;
-  width: 100%;
-
-}
-
-
-</style>
-=======
-<style></style>
->>>>>>> refs/remotes/origin/main
+const submitMessage = () => {
+  const newMessage: Omit<Message, "id"> = {
+    firstname: firstname.value,
+    lastname: lastname.value,
+    mail: mail.value,
+    message: messageText.value,
+  };
+  messageStore.createMessage(newMessage);
+  // Reset form fields
+  firstname.value = "";
+  lastname.value = "";
+  mail.value = "";
+  messageText.value = "";
+};
+</script>
