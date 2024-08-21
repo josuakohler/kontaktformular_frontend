@@ -2,9 +2,7 @@
 </script>
 
 <template>
-  <div class="container">
     <kontakt-form-comp></kontakt-form-comp>
-  </div>
 </template>
 
 <style scoped>

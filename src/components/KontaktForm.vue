@@ -33,6 +33,7 @@
 .name-input {
   display: flex;
   gap: 10px;
+
 }
 
 
