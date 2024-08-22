@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="5">
         <v-text-field
           v-model="firstname"
           :counter="10"
@@ -10,8 +10,7 @@
           required
         ></v-text-field>
       </v-col>
-
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="5">
         <v-text-field
           v-model="lastname"
           :counter="10"
@@ -20,8 +19,7 @@
           required
         ></v-text-field>
       </v-col>
-
-      <v-col cols="12" md="4">
+      <v-col cols="12" md="10">
         <v-text-field
           v-model="mail"
           label="E-mail"
@@ -29,6 +27,10 @@
           required
         ></v-text-field>
       </v-col>
+      <v-col cols="12" md="10">
+        <v-textarea v-model="messageText" label="message"> </v-textarea>
+      </v-col>
+      <v-btn @click="submitMessage"> senden </v-btn>
     </v-row>
   </v-container>
 </template>
@@ -63,5 +65,6 @@ const submitMessage = () => {
 
 <style>
 .v-application__wrap {
-  min-height: 0dvh;}
+  min-height: 0dvh;
+}
 </style>

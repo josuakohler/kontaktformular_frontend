@@ -7,6 +7,7 @@ import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
+import LogIn from "./components/LogIn.vue";
 
 import "@mdi/font/css/materialdesignicons.css";
 import "vuetify/styles";
@@ -21,5 +22,6 @@ const app = createApp(App);
 
 app.use(vuetify);
 app.component("kontakt-form-comp", KontaktForm);
+app.component("log-in-comp", LogIn);
 app.use(pinia);
 app.mount("#app");
