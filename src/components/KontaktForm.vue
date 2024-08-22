@@ -1,28 +1,36 @@
 <template>
-  <div class="container">
-    <div class="name-input">
-      <input v-model="firstname" type="text" placeholder="first name" />
-      <input v-model="lastname" type="text" placeholder="last name" />
-    </div>
-    <div class="mail-input">
-      <input
-        v-model="mail"
-        type="text"
-        name="email"
-        id="mail-input-id"
-        placeholder="e-mail"
-      />
-    </div>
-    <div class="message-input">
-      <textarea
-        v-model="messageText"
-        name="message"
-        id="message-input-id"
-        placeholder="message"
-      ></textarea>
-    </div>
-    <button @click="submitMessage">send</button>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col cols="12" md="4">
+        <v-text-field
+          v-model="firstname"
+          :counter="10"
+          label="First name"
+          hide-details
+          required
+        ></v-text-field>
+      </v-col>
+
+      <v-col cols="12" md="4">
+        <v-text-field
+          v-model="lastname"
+          :counter="10"
+          label="Last name"
+          hide-details
+          required
+        ></v-text-field>
+      </v-col>
+
+      <v-col cols="12" md="4">
+        <v-text-field
+          v-model="mail"
+          label="E-mail"
+          hide-details
+          required
+        ></v-text-field>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script setup lang="ts">
@@ -52,3 +60,8 @@ const submitMessage = () => {
   messageText.value = "";
 };
 </script>
+
+<style>
+.v-application__wrap {
+  min-height: 0dvh;}
+</style>
