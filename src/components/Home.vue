@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import LogInComp from "./components/LogIn.vue"; // Pfad anpassen, falls nötig
 
-// Ref für den Dialog-Status
 const dialog = ref(false);
 </script>
 
@@ -28,9 +26,7 @@ const dialog = ref(false);
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="primary" @click="dialog = false"
-              >Schließen</v-btn
-            >
+            <v-btn color="primary" @click="dialog = false">Schließen</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -38,4 +34,11 @@ const dialog = ref(false);
   </v-app>
 </template>
 
-<style></style>
+<style scoped>
+.avatar-position {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+</style>
