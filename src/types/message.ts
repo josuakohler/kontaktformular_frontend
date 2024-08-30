@@ -1,3 +1,4 @@
+
 // types/message.ts
 export interface Message {
     id: number;
