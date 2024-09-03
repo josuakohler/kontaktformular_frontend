@@ -4,7 +4,7 @@ import App from "./vues/App.vue";
 import KontaktForm from "./components/KontaktForm.vue";
 import { createPinia } from "pinia";
 import "vuetify/styles";
-import { createVuetify } from "vuetify";
+import { createVuetify, type ThemeDefinition } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 import LogIn from "./components/LogIn.vue";
@@ -14,6 +14,11 @@ import Home from "./components/Home.vue";
 import "@mdi/font/css/materialdesignicons.css";
 import "vuetify/styles";
 
+export default createVuetify({
+  theme: {
+    defaultTheme: "dark",
+  },
+});
 const vuetify = createVuetify({
   components,
   directives,
@@ -23,7 +28,7 @@ const pinia = createPinia();
 const app = createApp(App);
 app.use(router);
 app.use(vuetify);
-app.component("home-comp", Home)
+app.component("home-comp", Home);
 app.component("kontakt-form-comp", KontaktForm);
 app.component("log-in-comp", LogIn);
 app.use(pinia);

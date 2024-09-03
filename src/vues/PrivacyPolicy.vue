@@ -6,11 +6,10 @@
       padding: 20px;
       font-family: Arial, sans-serif;
       line-height: 1.6;
-      color: #333;
     "
   >
     <v-btn @click="goback()">back</v-btn>
-    <h1 style="text-align: center; color: #2c3e50">Privacy Policy</h1>
+    <h1>Privacy Policy</h1>
 
     <p>
       Your privacy is important to us. This Privacy Policy explains how

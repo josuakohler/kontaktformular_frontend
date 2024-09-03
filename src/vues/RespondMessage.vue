@@ -1,15 +1,15 @@
 <template>
   <v-app>
+    <home-comp></home-comp>
+
     <v-container
       fluid
       class="pa-0 fill-height d-flex flex-column"
-      style="background-color: #333"
     >
       <v-row no-gutters class="fill-height">
         <v-col
           cols="3"
           class="d-flex flex-column border-end"
-          style="background-color: white"
         >
           <div class="fixed-top">
             <v-list class="mb-0">
@@ -20,22 +20,19 @@
               ></v-list-item>
               <v-list-item class="mb-2">
                 <v-text-field
+                  v-model="searchMessages"
                   outlined
                   dense
                   hide-details
                   placeholder="Search"
                   prepend-inner-icon="mdi-magnify"
                   class="neumorphism-input"
-                  style="background-color: white; border-radius: 8px"
                 ></v-text-field>
               </v-list-item>
             </v-list>
           </div>
 
-          <v-list
-            class="scrollable-list flex-grow-1"
-            style="background-color: white"
-          >
+          <v-list class="scrollable-list flex-grow-1">
             <v-list-item
               v-for="msg in message.messages.slice().reverse()"
               :key="msg.id"
@@ -61,7 +58,7 @@
               </div>
             </v-card-title>
             <v-card-text v-if="selectedMessage" class="flex-grow-1">
-              <v-card outlined class="mb-4 neumorphism-card">
+              <v-card outlined class="mb-4">
                 <v-card-text v-if="editingMessageId !== selectedMessage.id">
                   {{ selectedMessage.message }}
                 </v-card-text>
@@ -71,7 +68,6 @@
                   label="Edit message"
                   @keyup.enter="saveEdit(selectedMessage.id)"
                   class="neumorphism-input"
-                  style="background-color: white; border-radius: 8px"
                 ></v-text-field>
               </v-card>
               <v-btn
@@ -109,7 +105,7 @@
               color="error"
               class="neumorphism-button"
             >
-              Delete {{ selectedMessageId }}
+              Delete
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -136,6 +132,7 @@ const editingMessageId = ref<number | null>(null);
 const editedMessage = ref("");
 const selectedMessage = ref<Message | null>(null);
 
+const searchMessages = ref("");
 onMounted(() => {
   message.fetchMessages();
 });
@@ -195,44 +192,15 @@ const sendMessage = () => {
 </script>
 
 <style scoped>
-.v-application__wrap {
-  background-color: #333; /* Background color matching your mockup */
-}
 .v-text-field,
 .v-textarea {
-  background-color: white; /* White background for input fields */
   border-radius: 8px;
 }
-.neumorphism-button,
-.send-btn {
-  color: green; /* Green button text matching the mockup */
-  background-color: #fff;
-  border-radius: 5px;
-}
 
-.neumorphism-button:hover,
-.send-btn:hover {
-  background-color: #e0e0e0; /* Slightly darker on hover */
-}
-.v-checkbox .v-icon {
-  color: green; /* Green checkbox icon */
-}
-
-.v-checkbox .v-label {
-  color: white; /* White text for privacy policy */
-}
-.v-col {
-  margin-bottom: 16px; /* Add some spacing between fields */
-}
-
-.fill-height {
-  height: 100vh;
-}
 .fixed-top {
   position: sticky;
   top: 0;
   z-index: 1;
-  background-color: white; /* Ensure background stays consistent */
 }
 
 .scrollable-list {

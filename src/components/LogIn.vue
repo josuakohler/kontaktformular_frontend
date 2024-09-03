@@ -46,8 +46,12 @@ const handleSubmit = async () => {
   isLoading.value = false;
 
   if (loginStore.isAuthenticated) {
-    console.log("is athenticated")
+    console.log("is athenticated");
     router.push("/respond");
-  } 
+  }
 };
 </script>
+
+<style>
+
+</style>

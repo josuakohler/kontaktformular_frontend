@@ -1,4 +1,5 @@
 <template>
+  <home-comp></home-comp>
   <v-container>
     <v-row class="justify-center">
       <v-col cols="12" md="5">
@@ -73,10 +74,11 @@ import { ref } from "vue";
 import { useMessageStore } from "../stores/message.store";
 import { Message } from "../types/message";
 import { useSendMessageStore } from "../stores/send.store";
-import router from "../router";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const messageStore = useMessageStore();
 const sendStore = useSendMessageStore();
-
 const snackbarColor = ref("");
 const firstname = ref("");
 const lastname = ref("");
@@ -96,6 +98,16 @@ const submitMessage = () => {
     snackBarText.value = "Please agree to the privacy policy.";
     showIsSentMessage.value = true;
 
+    return;
+  } else if (
+    !firstname.value ||
+    !lastname.value ||
+    !mail.value ||
+    !messageText.value
+  ) {
+    snackbarColor.value = "red";
+    snackBarText.value = "Please fill in all required fields.";
+    showIsSentMessage.value = true;
     return;
   }
 
@@ -129,39 +141,17 @@ const submitMessage = () => {
 <style>
 .v-application__wrap {
   min-height: 0dvh;
-  background-color: #333; /* Background color matching your mockup */
-}
-
-.v-text-field,
-.v-textarea {
-  background-color: white; /* White background for input fields */
-  border-radius: 8px;
-}
-
-.send-btn {
-  color: green; /* Green send button matching the mockup */
-  background-color: #fff;
-  border-radius: 5px;
+  display: flex;
+  justify-content: center; /* Zentriert horizontal */
+  align-items: center; /* Zentriert vertikal */
 }
 
 .send-btn:hover {
   background-color: #e0e0e0;
 }
 
-.v-checkbox .v-icon {
-  color: green; /* Green checkbox icon */
-}
-
-.v-checkbox .v-label {
-  color: white; /* White text for privacy policy */
-}
-
-.v-col {
-  margin-bottom: 16px; /* Add some spacing between fields */
-}
-
 .green-link {
-  color: green;
+  color: rgb(0, 255, 0);
   text-decoration: none;
 }
 

@@ -1,4 +1,7 @@
 <template>
+  <home-comp></home-comp>
+  <v-btn class="goBackBtn" @click="goBack()">back</v-btn>
+
   <v-container>
     <v-card>
       <v-card-title>Reply to Message</v-card-title>
@@ -28,7 +31,7 @@
             rows="6"
           ></v-textarea>
 
-          <v-btn type="submit" color="primary" block>Send Reply</v-btn>
+          <v-btn type="submit" color="green" block>Send Reply</v-btn>
         </v-form>
       </v-card-text>
     </v-card>
@@ -42,6 +45,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import { useSendMessageStore } from "../stores/send.store";
+import router from "../router";
 
 const store = useSendMessageStore();
 const { replyMessage } = store;
@@ -55,6 +59,10 @@ const toEmail = ref(store.email); // Replace with actual recipient's email
 const snackbar = ref(false);
 const snackbarText = ref("");
 const snackbarColor = ref("");
+
+const goBack = () => {
+  router.push("/respond");
+};
 
 const handleSubmit = async () => {
   if (!store.message.trim()) {
@@ -77,3 +85,10 @@ const handleSubmit = async () => {
   snackbar.value = true;
 };
 </script>
+
+<style>
+.goBackBtn {
+  justify-content: left;
+  align-content: left;
+}
+</style>
