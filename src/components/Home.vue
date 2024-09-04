@@ -17,7 +17,7 @@
           >
             Log In
           </v-btn>
-          <v-btn v-else variant="text" color="primary" @click="logOut()"> Log out </v-btn>
+          <v-btn v-else variant="text" color="primary" @click="loginStore.logout(), router.push('/')"> Log out </v-btn>
         </v-list-item>
         <v-divider></v-divider>
         <v-list-item>
@@ -76,10 +76,7 @@ const openLoginDialog = () => {
 };
 
 
-const logOut = () => {
-  router.push("/")
-  loginStore.isAuthenticated = false;
-}
+
 </script>
 
 <style scoped>

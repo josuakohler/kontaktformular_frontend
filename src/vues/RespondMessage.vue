@@ -57,39 +57,42 @@
                 <div>to: info@jls.ch</div>
               </div>
             </v-card-title>
-            <v-card-text v-if="selectedMessage" class="flex-grow-1">
-              <v-card outlined class="mb-4">
-                <v-card-text v-if="editingMessageId !== selectedMessage.id">
-                  {{ selectedMessage.message }}
-                </v-card-text>
-                <v-text-field
-                  v-else
-                  v-model="editedMessage"
-                  label="Edit message"
-                  @keyup.enter="saveEdit(selectedMessage.id)"
-                  class="neumorphism-input"
-                ></v-text-field>
-              </v-card>
-              <v-btn
-                color="primary"
-                class="mr-2 neumorphism-button"
-                @click="startEdit(selectedMessage.id, selectedMessage.message)"
-              >
-                {{ editingMessageId === selectedMessage.id ? "Save" : "Edit" }}
-              </v-btn>
-              <v-btn
-                color="error"
-                class="mr-2 neumorphism-button"
-                @click="openDeleteDialog(selectedMessage.id)"
-                >Delete</v-btn
-              >
-              <v-btn
-                color="success"
-                class="neumorphism-button"
-                @click="sendMessage()"
-                >Answer</v-btn
-              >
-            </v-card-text>
+            <div class="textFieldInput">
+              <v-card-text v-if="selectedMessage" class="flex-grow-1">
+                <v-card outlined class="mb-4">
+                  <v-card-text v-if="editingMessageId !== selectedMessage.id">
+                    {{ selectedMessage.message }}
+                  </v-card-text>
+                  <v-text-field
+                    v-else
+                    v-model="editedMessage"
+                    label="Edit message"
+                    @keyup.enter="saveEdit(selectedMessage.id)"
+                    class="neumorphism-input"
+                  ></v-text-field>
+                </v-card>
+                <v-btn
+                  color="primary"
+                  class="mr-2 neumorphism-button"
+                  @click="startEdit(selectedMessage.id, selectedMessage.message)"
+                >
+                  {{ editingMessageId === selectedMessage.id ? "Save" : "Edit" }}
+                </v-btn>
+                <v-btn
+                  color="error"
+                  class="mr-2 neumorphism-button"
+                  @click="openDeleteDialog(selectedMessage.id)"
+                  >Delete</v-btn
+                >
+                <v-btn
+                  color="success"
+                  class="neumorphism-button"
+                  @click="sendMessage()"
+                  >Answer</v-btn
+                >
+              </v-card-text>
+            </div>
+
           </v-card>
         </v-col>
       </v-row>
@@ -192,8 +195,13 @@ const sendMessage = () => {
 </script>
 
 <style scoped>
+.textFieldInput{
+  margin-top: 20px;
+}
+
 .v-text-field,
 .v-textarea {
+  
   border-radius: 8px;
 }
 

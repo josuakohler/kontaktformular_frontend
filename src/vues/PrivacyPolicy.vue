@@ -1,4 +1,6 @@
 <template>
+  <v-btn @click="goback()" class="goBackBtn">back</v-btn>
+  <home-comp></home-comp>
   <div
     style="
       max-width: 800px;
@@ -8,7 +10,6 @@
       line-height: 1.6;
     "
   >
-    <v-btn @click="goback()">back</v-btn>
     <h1>Privacy Policy</h1>
 
     <p>
@@ -106,3 +107,16 @@ const goback = () => {
 }
 
 </script>
+
+<style>
+.goBackBtn{
+
+margin: 20px;
+
+
+}
+
+
+
+
+</style>

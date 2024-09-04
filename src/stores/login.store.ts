@@ -1,6 +1,5 @@
-// login.store.ts
-import { defineStore } from 'pinia';
-import axios from 'axios';
+import { defineStore } from "pinia";
+import axios from "axios";
 
 interface LoginState {
   isAuthenticated: boolean;
@@ -10,8 +9,8 @@ interface LoginState {
 
 export const useLoginStore = defineStore('login', {
   state: (): LoginState => ({
-    isAuthenticated: false,
-    token: null,
+    isAuthenticated: localStorage.getItem('isAuthenticated') === 'true',
+    token: localStorage.getItem('token'),
     error: null,
   }),
   actions: {
@@ -21,16 +20,30 @@ export const useLoginStore = defineStore('login', {
         this.token = response.data.access_token;
         this.isAuthenticated = true;
         this.error = null;
+
+        // Save to localStorage
+        if (this.token) {
+          localStorage.setItem('token', this.token);
+        }
+        localStorage.setItem('isAuthenticated', 'true');
       } catch (error) {
         this.error = 'Invalid credentials';
         this.isAuthenticated = false;
         this.token = null;
+
+        // Clear localStorage
+        localStorage.removeItem('token');
+        localStorage.setItem('isAuthenticated', 'false');
       }
     },
     logout() {
       this.isAuthenticated = false;
       this.token = null;
       this.error = null;
+
+      // Clear localStorage
+      localStorage.removeItem('token');
+      localStorage.setItem('isAuthenticated', 'false');
     },
   },
 });

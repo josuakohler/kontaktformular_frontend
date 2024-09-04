@@ -1,72 +1,79 @@
+Du:
 <template>
   <home-comp></home-comp>
-  <v-container>
-    <v-row class="justify-center">
-      <v-col cols="12" md="5">
-        <v-text-field
-          v-model="firstname"
-          label="First name"
-          outlined
-          hide-details
-          required
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12" md="5">
-        <v-text-field
-          v-model="lastname"
-          label="Last name"
-          outlined
-          hide-details
-          required
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12" md="10">
-        <v-text-field
-          v-model="mail"
-          label="E-mail"
-          outlined
-          hide-details
-          required
-        ></v-text-field>
-      </v-col>
-      <v-col cols="12" md="10">
-        <v-textarea
-          v-model="messageText"
-          label="Message"
-          outlined
-          hide-details
-        ></v-textarea>
-      </v-col>
-      <v-col cols="12" md="10" class="d-flex align-center">
-        <v-checkbox v-model="privacyPolicy" hide-details required>
-          <template v-slot:label>
-            I have read the
-            <a
-              @click="showPolicy()"
-              target="_blank"
-              class="green-link"
-              rel="noopener noreferrer"
-              >privacy policy</a
-            >
-            and agree to the processing of my data.
-          </template>
-        </v-checkbox>
-      </v-col>
-      <v-col cols="12" md="10">
-        <v-btn @click="submitMessage" class="send-btn" color="green">
-          send
-        </v-btn>
-      </v-col>
+  <v-app>
+    <v-container>
+      <v-row class="justify-center">
+        <v-col cols="12" md="5">
+          <v-text-field
+            v-model="firstname"
+            :rules="rules"
+            label="First name"
+            outlined
+            hide-details
+            required
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="5">
+          <v-text-field
+            v-model="lastname"
+            label="Last name"
+            :rules="rules"
+            outlined
+            hide-details
+            required
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="10">
+          <v-text-field
+            v-model="mail"
+            label="E-mail"
+            :rules="rules"
+            outlined
+            hide-details
+            required
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="10">
+          <v-textarea
+            v-model="messageText"
+            label="Message"
+            :rules="rules"
+            outlined
+            hide-details
+          ></v-textarea>
+        </v-col>
+        <v-col cols="12" md="10" class="d-flex align-center">
+          <v-checkbox v-model="privacyPolicy" hide-details required>
+            <template v-slot:label>
+              I have read the
+              <a
+                @click="showPolicy()"
+                target="_blank"
+                class="green-link"
+                rel="noopener noreferrer"
+                >&nbsp;privacy policy&nbsp;
+              </a>
+              and agree to the processing of my data.
+            </template>
+          </v-checkbox>
+        </v-col>
+        <v-col cols="12" md="10">
+          <v-btn @click="submitMessage" class="send-btn" color="green">
+            send
+          </v-btn>
+        </v-col>
 
-      <v-snackbar
-        v-model="showIsSentMessage"
-        :color="snackbarColor"
-        timeout="3000"
-      >
-        {{ snackBarText }}
-      </v-snackbar>
-    </v-row>
-  </v-container>
+        <v-snackbar
+          v-model="showIsSentMessage"
+          :color="snackbarColor"
+          timeout="3000"
+        >
+          {{ snackBarText }}
+        </v-snackbar>
+      </v-row>
+    </v-container>
+  </v-app>
 </template>
 
 <script setup lang="ts">
@@ -91,6 +98,14 @@ const snackBarText = ref("");
 const showPolicy = () => {
   router.push("/privacy-policy");
 };
+
+const rules = [
+  (value: string) => {
+    if (value) return true;
+
+    return "You must enter a first name.";
+  },
+];
 
 const submitMessage = () => {
   if (!privacyPolicy.value) {
@@ -121,7 +136,7 @@ const submitMessage = () => {
   sendStore.firstName = firstname.value;
   sendStore.lastName = lastname.value;
   sendStore.email = mail.value;
-  sendStore.sendMessage();
+
 
   messageStore.createMessage(newMessage);
 

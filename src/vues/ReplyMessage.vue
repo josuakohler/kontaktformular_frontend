@@ -88,6 +88,7 @@ const handleSubmit = async () => {
 
 <style>
 .goBackBtn {
+  margin: 20px;
   justify-content: left;
   align-content: left;
 }
