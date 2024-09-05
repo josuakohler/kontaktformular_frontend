@@ -2,15 +2,9 @@
   <v-app>
     <home-comp></home-comp>
 
-    <v-container
-      fluid
-      class="pa-0 fill-height d-flex flex-column"
-    >
+    <v-container fluid class="pa-0 fill-height d-flex flex-column">
       <v-row no-gutters class="fill-height">
-        <v-col
-          cols="3"
-          class="d-flex flex-column border-end"
-        >
+        <v-col cols="3" class="d-flex flex-column border-end">
           <div class="fixed-top">
             <v-list class="mb-0">
               <v-list-item
@@ -20,7 +14,7 @@
               ></v-list-item>
               <v-list-item class="mb-2">
                 <v-text-field
-                  v-model="searchMessages"
+                  v-model="messageContent"
                   outlined
                   dense
                   hide-details
@@ -31,19 +25,66 @@
               </v-list-item>
             </v-list>
           </div>
-
           <v-list class="scrollable-list flex-grow-1">
             <v-list-item
-              v-for="msg in message.messages.slice().reverse()"
+              v-for="msg in searchMessages"
               :key="msg.id"
               @click="selectMessage(msg)"
               class="neumorphism-list-item"
             >
               <v-list-item-title>
-                {{ msg.firstname }} {{ msg.lastname }}
+                <template
+                  v-for="(part, index) in highlightTerm(
+                    msg.firstname + ' ' + msg.lastname,
+                    messageContent
+                  )"
+                  :key="index"
+                >
+                  <span
+                    :class="{
+                      highlight:
+                        part.toLowerCase() === messageContent.toLowerCase(),
+                    }"
+                  >
+                    {{ part }}
+                  </span>
+                </template>
               </v-list-item-title>
+
               <v-list-item-subtitle>
-                {{ msg.mail }}
+                <template
+                  v-for="(part, index) in highlightTerm(
+                    msg.mail,
+                    messageContent
+                  )"
+                  :key="index"
+                >
+                  <span
+                    :class="{
+                      highlight:
+                        part.toLowerCase() === messageContent.toLowerCase(),
+                    }"
+                  >
+                    {{ part }}
+                  </span>
+                </template>
+              </v-list-item-subtitle>
+
+              <v-list-item-subtitle>
+                <template
+                  v-for="(part, index) in highlightTerm(
+                    msg.message,
+                    messageContent
+                  )"
+                  :key="index"
+                  
+                >
+                  <span
+                    class="{ highlight: part.toLowerCase() === messageContent.toLowerCase() }"
+                  >
+                    {{ part }}
+                  </span>
+                </template>
               </v-list-item-subtitle>
             </v-list-item>
           </v-list>
@@ -74,9 +115,13 @@
                 <v-btn
                   color="primary"
                   class="mr-2 neumorphism-button"
-                  @click="startEdit(selectedMessage.id, selectedMessage.message)"
+                  @click="
+                    startEdit(selectedMessage.id, selectedMessage.message)
+                  "
                 >
-                  {{ editingMessageId === selectedMessage.id ? "Save" : "Edit" }}
+                  {{
+                    editingMessageId === selectedMessage.id ? "Save" : "Edit"
+                  }}
                 </v-btn>
                 <v-btn
                   color="error"
@@ -92,7 +137,6 @@
                 >
               </v-card-text>
             </div>
-
           </v-card>
         </v-col>
       </v-row>
@@ -118,7 +162,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 // import { useLoginStore } from "../stores/login.store";
 import { useRouter } from "vue-router";
 import { useMessageStore } from "../stores/message.store";
@@ -135,7 +179,27 @@ const editingMessageId = ref<number | null>(null);
 const editedMessage = ref("");
 const selectedMessage = ref<Message | null>(null);
 
-const searchMessages = ref("");
+const messageContent = ref("");
+const searchMessages = computed(() => {
+  const searchTerm = messageContent.value.toLowerCase();
+
+  return message.messages.filter(
+    (msg) =>
+      msg.firstname.toLowerCase().includes(searchTerm) ||
+      msg.lastname.toLowerCase().includes(searchTerm) ||
+      msg.message.toLowerCase().includes(searchTerm)
+  );
+});
+
+const highlightTerm = (text: string, searchTerm: string) => {
+  if (!searchTerm) return [text]; // Wenn kein Suchbegriff, gib den Text unverändert zurück
+
+  const regex = new RegExp(`(${searchTerm})`, "gi");
+  const parts = text.split(regex); // Text wird in Segmente aufgeteilt
+
+  return parts; // Teile des Textes werden zurückgegeben
+};
+
 onMounted(() => {
   message.fetchMessages();
 });
@@ -195,13 +259,12 @@ const sendMessage = () => {
 </script>
 
 <style scoped>
-.textFieldInput{
+.textFieldInput {
   margin-top: 20px;
 }
 
 .v-text-field,
 .v-textarea {
-  
   border-radius: 8px;
 }
 
@@ -218,5 +281,11 @@ const sendMessage = () => {
 
 .v-row {
   width: 100%;
+}
+
+.highlight {
+  background-color: yellow;
+  font-weight: bold;
+  color: black;
 }
 </style>
